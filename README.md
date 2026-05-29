@@ -1,8 +1,72 @@
 # PaperInbox
 
-PaperInbox is a native macOS menu-bar app for tracking papers locally, organizing them into collections, launching ChatGPT with structured prompts, and importing wrapped ChatGPT outputs back into the local library.
+PaperInbox is a native macOS menu-bar app for managing papers you want to read, summarize, and discuss with ChatGPT. It keeps a local library of PDFs and paper URLs, lets you organize papers into collections, launches ChatGPT with structured prompts, and imports ChatGPT summaries or study guides back into the paper card.
 
-This repository currently uses Swift Package layout plus a manual app-bundle build script because this machine has Command Line Tools but not full Xcode.
+The app is intentionally local-first. It stores its database, copied PDFs, and imported notes on your Mac under `~/Library/Application Support/PaperInbox/`.
+
+## What It Does
+
+- Captures papers from PDFs, single URLs, or a clipboard full of paper links.
+- Looks up metadata for arXiv/DOI/web URLs when possible.
+- Organizes papers into `To Study`, `Inbox`, `Read`, `Archived`, and custom collections.
+- Supports colored collection tags and drag-and-drop assignment.
+- Supports multi-select paper dragging into collections or between `Inbox` and `To Study`.
+- Generates summary and study-guide prompts for ChatGPT.
+- Imports wrapped ChatGPT output from the clipboard.
+- Renders imported Markdown and LaTeX/math in the paper detail view.
+- Saves ChatGPT conversation links for summaries and study guides.
+
+## Basic Workflow
+
+1. Launch PaperInbox.
+2. Use the menu-bar inbox icon to open the library or add papers.
+3. Add papers by dragging in PDFs, adding a URL, or using `Add Clipboard URLs`.
+4. Triage papers in `Inbox`, then drag papers into `To Study` or collections.
+5. Open a paper card and launch a summary or study-guide prompt in ChatGPT.
+6. Paste the ChatGPT response back through `Import ChatGPT Output from Clipboard`.
+7. Read the rendered summary/study guide inside the paper card.
+
+## Using The App
+
+PaperInbox runs as a menu-bar app. After launch, look for the small inbox icon in the macOS menu bar.
+
+The menu-bar actions are:
+
+- `Open Library`: opens the main library window to `To Study`.
+- `Quick Add Paper...`: opens the add-paper dialog.
+- `Add Clipboard URLs`: scans the clipboard for URLs and imports paper links. If arXiv links are present, it imports those paper links and ignores code/website links.
+- `Import ChatGPT Output from Clipboard`: imports PaperInbox-wrapped summaries and study guides.
+- `Settings`: opens app settings.
+
+In the library window:
+
+- `To Study` is the default landing view.
+- `Inbox` contains newly added unread papers.
+- Drag papers onto `To Study` or `Inbox` to change their status.
+- Create collections in the sidebar and drag papers onto them.
+- Command-click or Shift-click paper rows to select multiple papers, then drag the group into a collection or status.
+- Right-click a collection to rename or delete it.
+- Open a paper card to inspect metadata, collections, source links, prompts, summaries, study guides, and saved ChatGPT links.
+
+## ChatGPT Output Import
+
+PaperInbox expects ChatGPT summaries and study guides to preserve the wrappers included in the generated prompt, such as:
+
+```text
+[BEGIN PAPER SUMMARY: P-YYYY-MM-DD-NNNN]
+...
+[END PAPER SUMMARY: P-YYYY-MM-DD-NNNN]
+```
+
+or:
+
+```text
+[BEGIN STUDY GUIDE: P-YYYY-MM-DD-NNNN]
+...
+[END STUDY GUIDE: P-YYYY-MM-DD-NNNN]
+```
+
+Copy the full wrapped ChatGPT response, then choose `Import ChatGPT Output from Clipboard` from the menu-bar app.
 
 ## From Scratch
 
@@ -45,22 +109,6 @@ Then launch:
 /Applications/PaperInbox.app
 ```
 
-PaperInbox is a menu-bar app, so look for the small inbox icon in the macOS menu bar after launch.
-
-## Build
-
-The local build path that works in this environment is:
-
-```sh
-make app
-```
-
-That creates:
-
-```text
-Build/PaperInbox.app
-```
-
 ## Install After Rebuilding
 
 After building, quit PaperInbox if it is already running, then copy the app bundle into `/Applications`:
@@ -71,13 +119,15 @@ cp -R Build/PaperInbox.app /Applications/
 
 You can also drag `Build/PaperInbox.app` into the Applications folder in Finder.
 
-Launch the installed app from:
+Moving the app bundle does not move or delete your library data because data lives under `~/Library/Application Support/PaperInbox/`.
 
-```text
-/Applications/PaperInbox.app
+## Development
+
+The local build path that works in this environment is:
+
+```sh
+make app
 ```
-
-PaperInbox stores its local database and copied PDFs under `~/Library/Application Support/PaperInbox/`, so moving the app bundle does not move or delete your library data.
 
 You can also typecheck the app and core sources without building a bundle:
 
@@ -94,34 +144,11 @@ swift test
 
 On this machine, `swift test` currently fails before compiling project code because `xcrun --sdk macosx --show-sdk-platform-path` fails for the active Command Line Tools installation.
 
-## Implemented
+## Current Limitations
 
-- Menu-bar app shell with PaperInbox menu.
-- Library window with sidebar, paper list, and paper detail panes.
-- Local SQLite database using the system SQLite library.
-- FTS5 search table for paper metadata and imported artifact text.
-- Local storage under `~/Library/Application Support/PaperInbox/`.
-- Add URL papers.
-- Add PDF papers and copy them into app storage.
-- Best-effort metadata extraction for new PDFs and online metadata lookup for paper URLs.
-- Paper IDs in `P-YYYY-MM-DD-NNNN` format.
-- Collections with create/delete and paper assignment.
-- Status tracking for unread, to study, read, and archived.
-- Artifact indicators for summary, study guide, and chat transcript availability.
-- Read/archived visibility behavior.
-- PDF reveal and source URL open actions.
-- Exact summary and study-guide prompt generation.
-- Copy prompt and best-effort ChatGPT app open.
-- Clipboard wrapper parser/import for summaries and study guides.
-- Markdown mirroring for imported artifacts.
-- Scrollable rendered artifact view for imported Markdown and LaTeX/math content.
-- Saved ChatGPT conversation link field on summary and study-guide sections, even before content is imported.
-
-## Not Yet Implemented
-
-- Xcode project scaffolding.
-- Automatic prompt paste via Accessibility.
-- Automatic PDF attachment.
-- ChatGPT export ZIP import and review UI.
-- Editable prompt templates.
-- Open-at-login setting.
+- No Xcode project scaffolding yet.
+- No automatic prompt paste via Accessibility.
+- No automatic PDF attachment to ChatGPT.
+- ChatGPT export ZIP import is planned but not implemented.
+- Prompt templates are currently code-defined rather than editable in the UI.
+- Open-at-login setting is not implemented yet.
