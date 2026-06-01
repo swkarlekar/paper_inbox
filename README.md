@@ -96,7 +96,7 @@ or:
 
 Copy the full wrapped ChatGPT response, then choose `Import ChatGPT Output from Clipboard` from the menu-bar app.
 
-## From Scratch
+## Installation
 
 Clone the repository:
 
@@ -136,19 +136,6 @@ Then launch:
 ```text
 /Applications/PaperInbox.app
 ```
-
-## Install After Rebuilding
-
-After building, quit PaperInbox if it is already running, then copy the app bundle into `/Applications`:
-
-```sh
-cp -R Build/PaperInbox.app /Applications/
-```
-
-You can also drag `Build/PaperInbox.app` into the Applications folder in Finder.
-
-Moving the app bundle does not move or delete your library data because data lives under `~/Library/Application Support/PaperInbox/`.
-
 ## Development
 
 The local build path that works in this environment is:
