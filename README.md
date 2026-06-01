@@ -1,8 +1,10 @@
 # PaperInbox
 
-PaperInbox is a native macOS menu-bar app for managing papers you want to read, summarize, and discuss with ChatGPT. It keeps a local library of PDFs and paper URLs, lets you organize papers into collections, launches ChatGPT with structured prompts, and imports ChatGPT summaries or study guides back into the paper card.
+<p>
+  <img src="PaperInbox_AppIcon_Assets/PaperInbox_AppIcon_Master_1024.png" alt="PaperInbox app icon" width="96">
+</p>
 
-The app is intentionally local-first. It stores its database, copied PDFs, and imported notes on your Mac under `~/Library/Application Support/PaperInbox/`.
+PaperInbox is a native macOS menu-bar app for managing papers you want to read, summarize, and discuss with ChatGPT. It keeps a local library of PDFs and paper URLs, lets you organize papers into collections, launches ChatGPT with structured prompts, and imports ChatGPT summaries or study guides back into the paper card.
 
 ## What It Does
 
@@ -15,6 +17,32 @@ The app is intentionally local-first. It stores its database, copied PDFs, and i
 - Imports wrapped ChatGPT output from the clipboard.
 - Renders imported Markdown and LaTeX/math in the paper detail view.
 - Saves ChatGPT conversation links for summaries and study guides.
+
+## Screenshots
+
+<p>
+  <img src="Images/IMG_4613.png" alt="PaperInbox menu-bar dropdown with quick add, clipboard import, library, ChatGPT import/export, settings, and quit actions" width="290">
+</p>
+
+PaperInbox runs from the macOS menu bar, keeping library access, quick add, clipboard URL import, ChatGPT output import/export, settings, and quit actions close at hand.
+
+<p>
+  <img src="Images/IMG_3279.png" alt="PaperInbox library inbox with paper list, metadata, collection tags, source URL, and ChatGPT actions" width="900">
+</p>
+
+The library combines paper triage, metadata, collection tags, source links, and ChatGPT actions in a single native window.
+
+<p>
+  <img src="Images/IMG_0432.png" alt="PaperInbox paper detail view with a rendered imported study guide" width="900">
+</p>
+
+Imported summaries and study guides render inside the paper card with Markdown and LaTeX/math support.
+
+<p>
+  <img src="Images/IMG_2898.png" alt="PaperInbox paper detail view with a saved ChatGPT shared conversation link overlay" width="900">
+</p>
+
+Paper cards can keep ChatGPT conversation links alongside imported summaries and study guides.
 
 ## Basic Workflow
 
