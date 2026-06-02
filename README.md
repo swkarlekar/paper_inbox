@@ -6,6 +6,8 @@
 
 PaperInbox is a native macOS menu-bar app for managing papers you want to read, summarize, and discuss with ChatGPT. It keeps a local library of PDFs and paper URLs, lets you organize papers into collections, launches ChatGPT with structured prompts, and imports ChatGPT summaries or study guides back into the paper card.
 
+Note that this doesn't use API credits and instead utilizes your ChatGPT desktop app. As such, it requires a ChatGPT subscription and the desktop app to be downloaded. 
+
 ## What It Does
 
 - Captures papers from PDFs, single URLs, or a clipboard full of paper links.
